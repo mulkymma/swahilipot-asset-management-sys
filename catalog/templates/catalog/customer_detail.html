@@ -1,0 +1,37 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <p><strong>Name:</strong> <h4> {{customer.last_name}}, {{customer.first_name}}</h4></p>
+    <p><strong>Department: </strong>{{ customer.department }}</p>
+
+    <p>Assigned assets:</p>
+    <table class="table table-striped table-hover table-bordered">
+    <thead>
+      <tr>
+          <td>Hostname</td>
+          <td>Model</td>
+          <td>S/N</td>
+          <td>Type</td>
+          <td>Tag</td>
+          <td>Status</td>
+
+          </tr>
+    </thead>
+    <tbody>
+      {% for device in customer_detail %}
+          <tr><td><a href="{{ device.get_absolute_url }}">{{ device.hostname }}</a></td>
+              <td>{{device.model}}</td>
+              <td>{{device.serialn}}</td>
+              <td>{{device.type}}</td>
+              <td>{{device.tag}}</td>
+              <td>{{device.status_verbose}}</td>
+          </tr>
+
+    </tbody>
+   {% endfor %}
+ </table>
+
+</div>
+
+{% endblock %}

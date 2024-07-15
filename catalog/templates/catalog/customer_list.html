@@ -1,0 +1,30 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<div class="container">
+   <h1>Customer List</h1>
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <td>Customer</td>
+                <td>Department</td>
+                <td>Location</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% if customer_list %}
+                {% for customer in customer_list %}
+                  <tr><td><a href="{{ customer.get_absolute_url }}">{{ customer.last_name }}, {{customer.first_name}}</a></td>
+                  <td>{{customer.department}}</td>
+                  <td>{{customer.location}}</td>
+                  </tr>
+
+                {% endfor %}
+        </tbody>
+    {% else %}
+      <p>There are no Customer.</p>
+    {% endif %}
+    </table>
+</div>
+{% endblock %}
+
