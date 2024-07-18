@@ -128,7 +128,7 @@ class SearchResultsView(generic.ListView):
 
     def get_queryset(self):  # новый
         query = self.request.GET.get('q')
-        object_list = Device.objects.filter(Q(title__icontains=query) | Q(status__icontains=query) |
+        object_list = Device.objects.filter( Q(status__icontains=query) |
                                             Q(serialn__icontains=query) | Q(customer__last_name__icontains=query) | Q(model__name__icontains=query))
         return object_list
 

@@ -5,6 +5,10 @@ from .resources import DevicelistResource, AssettagResource
 from import_export.admin import ImportExportModelAdmin
 from .models import Customer, Model, Device, Type, Tracker, Archive, Inventory, Location, Department
 
+# Customize the admin site headers
+admin.site.site_header = "Swahilipot Administration"
+admin.site.site_title = "Swahilipot Admin Portal"
+admin.site.index_title = "Welcome to the Swahilipot Admin Portal"
 
 # Register your models here.
 
