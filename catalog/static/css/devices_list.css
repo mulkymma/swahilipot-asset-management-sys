@@ -1,0 +1,26 @@
+/* devices_list.css */
+
+body {
+    background-color: #f0f8ff; /* Light blue background */
+}
+
+h1 {
+    color: #007bff; /* Light blue text color */
+}
+
+.table thead {
+    background-color: #007bff; /* Light blue header background */
+    color: white; /* White text color */
+}
+
+.table-hover tbody tr:hover {
+    background-color: #d0e9ff; /* Light blue hover color */
+}
+
+a {
+    color: #007bff; /* Light blue link color */
+}
+
+a:hover {
+    color: #0056b3; /* Darker blue on hover */
+}
