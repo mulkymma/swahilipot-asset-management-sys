@@ -4,9 +4,8 @@ from import_export.widgets import ForeignKeyWidget, DateWidget
 from .models import Device, Customer, Model, Type, Inventory, Location
 
 class DevicelistResource(resources.ModelResource):
-    """
-        Import Device
-    """
+
+
 
     hostname = Field(attribute='hostname', column_name='Hostname')
     customer = Field(attribute='customer', column_name='Customer', widget=ForeignKeyWidget(Customer, 'last_name'))

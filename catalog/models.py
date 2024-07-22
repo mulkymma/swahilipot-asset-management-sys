@@ -3,8 +3,6 @@ from django.db import models
 from django.utils import timezone
 from django.urls import reverse
 
-# Create your models here.
-
 class Type(models.Model):
     """
     Model representing a devices type
