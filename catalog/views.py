@@ -5,7 +5,73 @@ from django.views.generic import ListView
 from django.db.models import Count, Q
 from .models import Device, Customer, Model, Tracker, Inventory
 from django.views import generic
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from rest_framework import viewsets
+from .serializers import DeviceSerializer, CustomerSerializer, ModelSerializer, TrackerSerializer, InventorySerializer
+
+from .models import Asset
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+
+from django.contrib.auth.views import LoginView
+
+class CustomLoginView(LoginView):
+    template_name = 'catalog/login.html'
+    success_url = reverse_lazy('asset-list')
+
+
+
+
+class AssetListView(ListView):
+    model = Asset
+    template_name = 'catalog/asset_list.html'
+    context_object_name = 'asset'
+
+class AssetDetailView(DetailView):
+    model = Asset
+    template_name = 'catalog/asset_detail.html'
+    context_object_name = 'asset'
+
+    def get(self, request, *args, **kwargs):
+        print(f"Asset ID: {kwargs['pk']}")
+        response = super().get(request, *args, **kwargs)
+        print(f"Asset Object: {self.get_object()}")
+        return response
+
+
+class AssetCreateView(CreateView):
+    model = Asset
+    fields = ['name', 'category', 'location', 'condition']
+    template_name = 'catalog/asset_form.html'
+    success_url = reverse_lazy('asset-list')
+
+class AssetUpdateView(UpdateView):
+    model = Asset
+    fields = ['name', 'category', 'location', 'condition']
+    template_name = 'catalog/asset_form.html'
+    success_url = reverse_lazy('asset-list')
+
+class AssetDeleteView(DeleteView):
+    model = Asset
+    template_name = 'catalog/asset_confirm_delete.html'
+    success_url = reverse_lazy('asset-list')
+
+
+def asset_list(request):
+    assets = Asset.objects.all()
+    assets_by_type = {}
+    for asset in assets:
+        assets_by_type.setdefault(asset.type, []).append(asset)
+
+    return render(request, 'catalog/asset_list.html', {'assets_by_type': assets_by_type})
+
+
+
+
+
+
+
+
+
 
 
 
@@ -31,12 +97,19 @@ def index(request):
     # view HTML-template index.html with data
     # variable context
     return render(
-        request,
+           request,
         'index1.html',
-        context={'num_devices':num_devices,
-                 'num_authors':num_authors, 'num_visits':num_visits,
-                 'num_lt':num_lt, 'num_dt':num_dt, 'num_mt':num_mt, 'num_dl_dep':num_dl_dep, 'num_dv_stk':num_dv_stk,
-                 'num_dv_new':num_dv_new},
+        context={
+            'num_devices': num_devices,
+            'num_authors': num_authors,
+            'num_visits': num_visits,
+            'num_lt': num_lt,
+            'num_dt': num_dt,
+            'num_mt': num_mt,
+            'num_dl_dep': num_dl_dep,
+            'num_dv_stk': num_dv_stk,
+            'num_dv_new': num_dv_new
+        },
     )
     reverse('catalog_index1', args=())
 
@@ -60,7 +133,7 @@ class DeviceDetailView(generic.DetailView):
         try:
             device_id = Device.objects.get(pk=pk)
         except Device.DoesNotExist:
-            raise Http404("Book does not exist")
+            raise Http404("Device does not exist")
 
         return render(
             request,
@@ -138,3 +211,24 @@ class InventoryListView(generic.ListView):
     context_object_name = 'object_list'
     template_name = 'inv.html'
     paginate_by = 48
+
+# API ViewSets
+class DeviceViewSet(viewsets.ModelViewSet):
+    queryset = Device.objects.all()
+    serializer_class = DeviceSerializer
+
+class CustomerViewSet(viewsets.ModelViewSet):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+
+class ModelViewSet(viewsets.ModelViewSet):
+    queryset = Model.objects.all()
+    serializer_class = ModelSerializer
+
+class TrackerViewSet(viewsets.ModelViewSet):
+    queryset = Tracker.objects.all()
+    serializer_class = TrackerSerializer
+
+class InventoryViewSet(viewsets.ModelViewSet):
+    queryset = Inventory.objects.all()
+    serializer_class = InventorySerializer

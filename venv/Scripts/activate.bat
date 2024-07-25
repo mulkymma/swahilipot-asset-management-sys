@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\Hp\Assets\swahilipot-asset-management-sys\venv
+set VIRTUAL_ENV=C:\Users\vicky\Documents\swahilipot-asset-management-sys\venv
 
 if not defined PROMPT set PROMPT=$P$G
 

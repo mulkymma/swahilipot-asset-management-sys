@@ -5,6 +5,18 @@ from .resources import DevicelistResource, AssettagResource
 from import_export.admin import ImportExportModelAdmin
 from .models import Customer, Model, Device, Type, Tracker, Archive, Inventory, Location, Department
 
+
+
+from django.contrib import admin
+from .models import Asset
+from .resources import AssetResource
+
+admin.site.register(Asset)
+class EmployeeAdmin(ImportExportModelAdmin):
+    resource_class = AssetResource
+
+
+
 # Customize the admin site headers
 admin.site.site_header = "Swahilipot Administration"
 admin.site.site_title = "Swahilipot Admin Portal"

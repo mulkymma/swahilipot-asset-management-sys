@@ -1,0 +1,24 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="container">
+  <br>
+  <br>
+  <div class="card" style="width: 20rem;">
+    <div class="card-body">
+      <div class="card-header">
+        <h5 class="card-title">Name: {{ asset.name }}</h5>
+        <p class="card-text">Asset ID: {{ asset.id }}</p>
+      </div>
+    </div>
+    <div class="card-body">
+        <p><strong>Category:</strong> {{ asset.category }}</p>
+        <p><strong>Location:</strong> {{ asset.location }}</p>
+        <p><strong>Condition:</strong> {{ asset.condition }}</p>
+        <!-- Add any other fields you may need -->
+    </div>
+  </div>
+</div>
+  <a href="{% url 'catalog:asset-update' object.pk %}">Edit</a>
+  <a href="{% url 'catalog:asset-delete' object.pk %}">Delete</a>
+{% endblock %}
