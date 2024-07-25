@@ -61,10 +61,13 @@
             <a class="btn btn-primary m-2" href="{% url 'catalog:index1' %}">Home<span class="sr-only"></span></a>
           </li>
           <li class="nav-item">
+            <a class="btn btn-primary m-2" href="{% url 'catalog:asset-list' %}">Assets</a>
+          </li>
+          <li class="nav-item">
             <a class="btn btn-primary m-2" href="{% url 'catalog:devices' %}">Devices</a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-primary m-2" href="{% url 'catalog:customers' %}">Customer</a>
+            <a class="btn btn-primary m-2" href="{% url 'catalog:customers' %}">Employee's</a>
           </li>
           <li class="nav-item">
             <a class="btn btn-primary m-2" href="{% url 'catalog:inventory' %}">Inventory</a>
@@ -74,6 +77,9 @@
           </li>
           <li class="nav-item">
             <a class="btn btn-primary m-2" href="{% url 'admin:index' %}">Manage</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-primary m-2" href="{% url 'catalog:login' %}">Login</a>
           </li>
         </ul>
         <form action="{% url 'catalog:search_result' %}" method="get" class="form-inline my-2 my-lg-0">

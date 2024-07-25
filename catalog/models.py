@@ -3,6 +3,50 @@ from django.db import models
 from django.utils import timezone
 from django.urls import reverse
 
+
+
+
+
+class Asset (models.Model):
+    CATEGORY_CHOICES = [
+        ('Laptop', 'Laptop'),
+        ('Keyboard', 'Keyboard'),
+        ('Mouse', 'Mouse'),
+        ('Desktop', 'Desktop'),
+        ('Chairs', 'Chairs'),
+        ('Tables', 'Tables'),
+        ('Sound-System', 'Sound-System')
+        # Add other categories as needed
+    ]
+    CONDITION_CHOICES = [
+        ('New', 'New'),
+        ('Old', 'Old'),
+        ('Refubrished', 'Refubrished'),
+        ('Second-hand', 'Second-hand')
+
+
+    ]
+    name = models.CharField(max_length=255)
+    category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
+    location = models.CharField(max_length=255)
+    condition = models.CharField(max_length=50, choices=CONDITION_CHOICES)
+    type = models.CharField(max_length=100) 
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.name} ({self.category})"
+
+
+
+
+    def get_absolute_url(self):
+        """
+        Returns the url to access a particular asset.
+        """
+        return reverse('catalog:asset-detail', args=[str(self.id)])
+
+    
+
 class Type(models.Model):
     """
     Model representing a devices type
