@@ -1,0 +1,63 @@
+{% extends "base_login.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    {% block content %}
+    <div class="bg-soft-success">
+        <div class="container content-space-1 content-space-t-md-3">
+            <div class="mx-auto" style="max-width: 30rem;">
+                <div class="card card-lg zi-2">
+                    <div class="card-header text-center">
+                        <h4 class="card-title">Sign Up</h4>
+                        <p class="card-text">Already have an account? <a class="link" href="{% url 'catalog:login' %}">Log in here</a></p>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" class="js-validate need-validate" novalidate>
+                            {% csrf_token %}
+                            <div class="mb-4">
+                                <label class="form-label" for="id_username">Username</label>
+                                <input type="text" class="form-control" name="username" id="id_username" placeholder="Username" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="id_email">Email address</label>
+                                <input type="email" class="form-control" name="email" id="id_email" placeholder="email@site.com" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="id_password1">Password</label>
+                                <input type="password" class="form-control" name="password1" id="id_password1" placeholder="8+ characters required" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="id_password2">Confirm Password</label>
+                                <input type="password" class="form-control" name="password2" id="id_password2" placeholder="Repeat your password" required>
+                            </div>
+                            <div class="d-grid mb-4">
+                                <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shape-container">
+        <div class="shape shape-bottom zi-1">
+            <svg viewBox="0 0 3000 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 1000V583.723L3000 0V1000H0Z" fill="#fff"/>
+            </svg>
+        </div>
+    </div>
+    {% endblock %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

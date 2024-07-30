@@ -1,0 +1,14 @@
+<!-- catalog/templates/catalog/assign_asset_success.html -->
+{% extends "base_generic.html" %}
+{% block content %}
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="text-center">
+        <h2>Asset Assigned Successfully</h2>
+        <p>The asset has been assigned successfully.</p>
+        <div class="btn-group d-flex justify-content-center">
+            <a href="{% url 'catalog:assign_asset' %}" class="btn btn-primary mx-2">Assign Another Asset</a>
+            <a href="{% url 'catalog:assigned_asset_list' %}" class="btn btn-primary mx-2">View Assigned Assets</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,13 +1,33 @@
 from datetime import date
 from django.contrib import admin
 from import_export import resources
-from .resources import DevicelistResource, AssettagResource
+'''from .resources import DevicelistResource, AssettagResource'''
 from import_export.admin import ImportExportModelAdmin
-from .models import Customer, Model, Device, Type, Tracker, Archive, Inventory, Location, Department
+'''from .models import Customer, Model, Device, Type, Tracker, Archive, Inventory, Location, Department'''
 
+
+
+from django.contrib import admin
+from .models import Asset, AssignedAsset, AssetAssignment, DamagedAsset
+from .resources import AssetResource
+
+admin.site.register(Asset)
+admin.site.register(AssignedAsset)
+admin.site.register(AssetAssignment)
+admin.site.register(DamagedAsset)
+
+class EmployeeAdmin(ImportExportModelAdmin):
+    resource_class = AssetResource
+
+
+
+# Customize the admin site headers
+admin.site.site_header = "Swahilipot Administration"
+admin.site.site_title = "Swahilipot Admin Portal"
+admin.site.index_title = "Welcome to the Swahilipot Admin Portal"
 
 # Register your models here.
-
+'''
 admin.site.register(Model)
 admin.site.register(Type)
 
@@ -74,4 +94,4 @@ admin.site.register(Location, LocationAdmin)
 class DepartmentAdmin(admin.ModelAdmin):
     list_display = ('name', 'description')
 
-admin.site.register(Department, DepartmentAdmin)
+admin.site.register(Department, DepartmentAdmin)'''
