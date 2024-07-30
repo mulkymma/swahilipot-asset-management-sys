@@ -2,8 +2,101 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
+import uuid
+from django.db import models
+from django.utils.crypto import get_random_string
 
-# Create your models here.
+
+
+
+
+class Asset (models.Model):
+    CATEGORY_CHOICES = [
+        ('Laptop', 'Laptop'),
+        ('Keyboard', 'Keyboard'),
+        ('Mouse', 'Mouse'),
+        ('Desktop', 'Desktop'),
+        ('Chairs', 'Chairs'),
+        ('Tables', 'Tables'),
+        ('Sound-System', 'Sound-System')
+        # Add other categories as needed
+    ]
+    CONDITION_CHOICES = [
+        ('New', 'New'),
+        ('Old', 'Old'),
+        ('Refubrished', 'Refubrished'),
+        ('Second-hand', 'Second-hand')
+
+
+    ]
+    id = models.CharField(max_length=20, primary_key=True, editable=False)
+    name = models.CharField(max_length=255)
+    category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
+    location = models.CharField(max_length=255)
+    condition = models.CharField(max_length=50, choices=CONDITION_CHOICES)
+    quantity = models.PositiveIntegerField(default=1)
+    qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.id = self.generate_unique_id()
+        super().save(*args, **kwargs)
+
+    def generate_unique_id(self):
+        """Generate a unique ID with SPH- prefix"""
+        return f'SPH-AM-{get_random_string(2, allowed_chars="0123456789")}'
+
+
+    def get_absolute_url(self):
+        return reverse('catalog:asset_detail', kwargs={'pk': self.pk})
+
+    def __str__(self):
+        return self.name
+
+
+
+class AssetAssignment(models.Model):
+    asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+    organisation_name = models.CharField(max_length=255)
+    phone_number = models.CharField(max_length=15)
+    date_picked = models.DateField(default=timezone.now)
+    date_to_return = models.DateField()
+
+
+    def __str__(self):
+        return f"{self.asset.name} - {self.organisation_name}"
+    
+class AssignedAsset(models.Model):
+    asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    organisation_name = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=15)
+    date_picked = models.DateField()
+    date_to_return = models.DateField()
+
+    def __str__(self):
+        return f"{self.asset.name} assigned to {self.organisation_name}"
+
+
+
+    def get_absolute_url(self):
+        """
+        Returns the url to access a particular asset.
+        """
+        return reverse('catalog:asset-detail', args=[str(self.id)])
+    
+
+class DamagedAsset(models.Model):
+    asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+    date_reported = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.asset.name} - {self.quantity}"
+
+
+    '''
 
 class Type(models.Model):
     """
@@ -306,3 +399,5 @@ class Department(models.Model):
         String for representing the Department object (in Admin site etc.)
         """
         return self.name
+
+        '''

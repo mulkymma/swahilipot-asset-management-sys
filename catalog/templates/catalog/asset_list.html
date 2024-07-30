@@ -1,0 +1,68 @@
+{% extends "base_generic.html" %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'dt/datatables.min.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/assets_list.css' %}"/>
+
+<script type="text/javascript" src="{% static 'dt/datatables.min.js' %}"></script>
+<div class="container mt-1">
+    <h1 class="text-center text-primary">Asset List</h1>
+    
+    <div class="row mb-4">
+        <div class="col-md-6 text-left">
+            <a href="{% url 'catalog:asset_create' %}" class="btn btn-primary btn-lg">Create New Asset</a>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="{% url 'catalog:assign_asset' %}" class="btn btn-primary btn-lg">Assign an Asset</a>
+        </div>
+    </div>
+
+    <table id="asset" class="table table-striped table-hover table-bordered">
+        <thead class="bg-primary text-white">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Location</th>
+            <th>Condition</th>
+            <th>Quantity</th>
+        </tr>
+        </thead>
+        {% if object_list %}
+        <tbody>
+          {% for asset in object_list %}
+          <tr>
+            <td><a href="{% url 'catalog:asset-detail' asset.id %}" class="text-primary">{{ asset.id }}</a></td>
+              <td>{{ asset.name }}</td>
+              <td>{{ asset.category }}</td>
+              <td>{{ asset.location }}</td>
+              <td>{{ asset.condition }}</td>
+              <td>{{ asset.quantity }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        {% else %}
+        <tbody>
+          <tr>
+            <td colspan="5" class="text-center">There are no assets in the list.</td>
+          </tr>
+        </tbody>
+        {% endif %}
+    </table>
+
+
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#asset').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [[25, 40, 60, -1], [25, 40, 60, "All"]],
+            "bProcessing": true
+        });
+    });
+</script>
+
+{% endblock %}

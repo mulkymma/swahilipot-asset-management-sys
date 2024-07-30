@@ -1,12 +1,12 @@
-"""
-WSGI config for asset project.
+'''
+import os
 
-It exposes the WSGI callable as a module-level variable named ``application``.
+from django.core.wsgi import get_wsgi_application
 
-For more information on this file, see
-https://docs.djangoproject.com/en/3.2/howto/deployment/wsgi/
-"""
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'asset.settings')
 
+application = get_wsgi_application()
+'''
 import os
 
 from django.core.wsgi import get_wsgi_application

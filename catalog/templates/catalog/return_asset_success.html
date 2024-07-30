@@ -1,0 +1,13 @@
+<!-- templates/catalog/return_asset_success.html -->
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center text-primary">Asset Returned Successfully</h1>
+    <p class="text-center">The asset has been returned and the records have been updated.</p>
+    <div class="text-center mt-4">
+        <a href="{% url 'catalog:assigned_asset_list' %}" class="btn btn-primary">Back to Assigned Assets</a>
+        <a href="{% url 'catalog:maintenance-list' %}" class="btn btn-secondary ml-3">Go to Maintenance</a>
+    </div>
+</div>
+{% endblock %}

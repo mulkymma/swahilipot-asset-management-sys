@@ -1,0 +1,69 @@
+{% extends "base_generic.html" %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'dt/datatables.min.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/assets_list.css' %}"/>
+
+<script type="text/javascript" src="{% static 'dt/datatables.min.js' %}"></script>
+
+<div class="container mt-1">
+   <h1 class="text-center text-primary">Assigned Assets</h1>
+  
+    <table id="assigned_assets" class="table table-striped table-hover table-bordered">
+        <thead class="bg-primary text-white">
+        <tr>
+            <th>Asset</th>
+            <th>Quantity</th>
+            <th>Organisation Name</th>
+            <th>Phone Number</th>
+            <th>Date Picked</th>
+            <th>Date to Return</th>
+            <th>Action</th>
+
+        </tr>
+        </thead>
+        {% if asset_assignment %}
+        <tbody>
+            {% for asset_assignment in asset_assignment %}
+            <tr>
+              <td><a href="{{ device.get_absolute_url }}" class="text-primary">{{ asset_assignment.asset.name }}</a></td>
+              <td>{{ asset_assignment.quantity }}</td>
+              <td>{{ asset_assignment.organisation_name }}</td>
+              <td>{{ asset_assignment.phone_number }}</td>
+              <td>{{ asset_assignment.date_picked }}</td>
+              <td>{{ asset_assignment.date_to_return }}</td>
+              <td> <a href="{% url 'catalog:return_asset' asset_assignment.pk %}" class="btn btn-secondary btn-sm">Return</a> </td>
+            </tr>
+          {% endfor %}
+          
+        </tbody>
+        {% else %}
+        <tbody>
+          <tr>
+            <td colspan="6" class="text-center">There are no assigned assets in the list.</td>
+          </tr>
+        </tbody>
+        {% endif %}
+    </table>
+
+
+</div>
+
+<script>
+  $(document).ready(function() {
+      var table = $('#assigned_assets').DataTable({
+          "pagingType": "full_numbers",
+          "lengthMenu": [[25, 40, 60, -1], [25, 40, 60, "All"]],
+          "bProcessing": true
+      });
+
+      // Add search functionality
+      $('#search-input').on('keyup', function() {
+          table.search(this.value).draw();
+      });
+  });
+</script>
+{% endblock %}

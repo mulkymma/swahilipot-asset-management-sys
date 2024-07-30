@@ -1,12 +1,19 @@
 from import_export import resources
 from import_export.fields import Field
 from import_export.widgets import ForeignKeyWidget, DateWidget
-from .models import Device, Customer, Model, Type, Inventory, Location
 
+
+from .models import Asset
+
+class AssetResource(resources.ModelResource):
+    class Meta:
+        model = Asset
+        fields = ('id', 'name', 'category', 'location', 'condition')
+        export_order = ('id', 'name', 'category', 'location', 'condition')
+'''
 class DevicelistResource(resources.ModelResource):
-    """
-        Import Device
-    """
+
+
 
     hostname = Field(attribute='hostname', column_name='Hostname')
     customer = Field(attribute='customer', column_name='Customer', widget=ForeignKeyWidget(Customer, 'last_name'))
@@ -46,3 +53,4 @@ class AssettagResource(resources.ModelResource):
         model = Inventory
         exclude = ('id', )
         import_id_fields = ('num', 'snum', )
+'''
